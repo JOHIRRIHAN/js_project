@@ -13,6 +13,7 @@ function calculateTriangleArea(){
     console.log(area);
     const areaSpan = document.getElementById('Triangle-area');
     areaSpan.innerText = area;   
+    addToCalculationEntry('triangle', area);
 }
 function calculateRectangleArea(){
     // get triangle base value
@@ -29,6 +30,7 @@ function calculateRectangleArea(){
     
     const areaSpan = document.getElementById('rectangle-area');
     areaSpan.innerText = area;   
+    addToCalculationEntry('rectangle', area);
 }
 
 
@@ -63,6 +65,7 @@ function calculateParallelogramArea(){
 
     const area = base * height;
     setElementInnerText('parallelogram-area', area);
+    addToCalculationEntry('pentagon', area);
 }
 
 // reusable get input value field in Number
@@ -80,6 +83,11 @@ function setElementInnerText(elementId,area){
     element.innerText = area;
 }
 
+
+
+
+
+
 // <!-- four card  ellipse-->
 function calculateEllipseArea(){
     const base = getInputValue('ellipse-first-radius');
@@ -91,6 +99,7 @@ function calculateEllipseArea(){
     const area = base * height * 3.14;
     const areaTwoDecimal = area.toFixed(2)
     setElementInnerText('ellipse-area', area);
+    addToCalculationEntry('ellipse', area);
 }
 
 // reusable get input value field in Number
@@ -118,6 +127,7 @@ function calculateRhombusArea(){
     const area = 0.5 * base * height;
     const areaTwoDecimal = area.toFixed(2)
     setElementInnerText('Rhombus-area', area);
+    addToCalculationEntry('rhombus', area);
 }
 
 // reusable get input value field in Number
@@ -141,11 +151,18 @@ function calculatePentagonArea(){
     // console.log(p)
 
     const b = getInputValue('Pentagon-second-radius');
-    // console.log(b);
+    // console.log(b);'
+    if(isNaN(p) || isNaN(b)){
+        alert('please insert number')
+        return
+    }
 
     const area = 0.5 * p * b;
-    const areaTwoDecimal = area.toFixed(2)
+    const areaTwoDecimal = area.toFixed(2);
     setElementInnerText('Pentagon-area', area);
+    
+    addToCalculationEntry('pentagon', area);
+
 }
 
 // reusable get input value field in Number
@@ -161,4 +178,14 @@ function getInputValue(fieldId){
 function setElementInnerText(elementId,area){
     const element = document.getElementById(elementId)
     element.innerText = area;
+   
+}
+function addToCalculationEntry( areaType, area){
+    const calculationEntry = document.getElementById('calculation-entry');
+    const count = calculationEntry.childElementCount;
+    const p = document.createElement('p');
+    p.classList.add('my-4')
+    p.innerHTML = `${count + 1}. ${areaType} ${area} cm<sup>2</sup> <button class="btn btn-sm btn-success">convert</button>`;
+
+    calculationEntry.appendChild(p);
 }
